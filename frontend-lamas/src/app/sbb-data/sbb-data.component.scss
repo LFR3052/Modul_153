@@ -1,0 +1,29 @@
+.search {
+    display: flex;
+    flex-direction: row;
+}
+
+form {
+    margin: 0px 50px;
+}
+mat-form-field {
+    margin-right: 50px;
+}
+
+h1 {
+    margin-left: 50px;
+}
+
+.search {
+    height: 40px;
+    margin-top: 10px;
+}
+
+.reset {
+    margin: 10px 0px 0px 20px;
+}
+
+.statistics{
+    height: 40px;
+    margin: 10px 0px 0px 30px;
+}

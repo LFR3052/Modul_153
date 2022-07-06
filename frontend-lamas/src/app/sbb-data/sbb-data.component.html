@@ -1,0 +1,133 @@
+<h1>SBB Daten</h1>
+
+<div class="search">
+
+  <form [formGroup]="formGroup">
+    <mat-form-field>
+      <mat-label>Stations</mat-label>
+      <input formControlName="Stations" matInput type="text" [matAutocomplete]="auto" #station/>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptionsStations" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <mat-select [(value)]="selectedDate">
+        <ng-container *ngFor="let option of filteredOptionsDates">
+          <mat-option [value]="option">{{option}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+  <button mat-raised-button class="search" (click)="search(station.value, selectedDate)">Search</button>
+
+  <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon" class="reset" (click)="reset()">
+    <mat-icon>delete</mat-icon>
+  </button>
+
+  <button mat-stroked-button color="primary" routerLink="/statistics" class="statistics">Statistics</button>
+</div>
+
+
+
+
+
+<div>
+  <mat-table [dataSource]="rides">
+    <mat-header-row *matHeaderRowDef="displayedColums"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColums"></mat-row>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> id </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="betriebstag">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> betriebstag </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.betriebstag}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ausfall">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ausfall </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ausfall}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="zusatzfahrt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> zusatzfahrt </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.zusatzfahrt}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ankunft">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ankunft </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ankunft | date:'shortTime'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ankunftprognose">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ankunftprognose </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ankunftprognose | date:'shortTime'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ankunftprognosestatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ankunftpro.status </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ankunftprognosestatus}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="abfahrt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> abfahrt </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.abfahrt | date:'shortTime'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="abfahrtprognose">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> abfahrtprognose </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.abfahrtprognose | date:'shortTime'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="abfahrtprognosestatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> abfahrtpro.status </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.abfahrtprognosestatus}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="durchfahrt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> durchfahrt </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.durchfahrt}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ankunftsverspaetung">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> an.verspaetung </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ankunftsverspaetung}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="abfahrtsverspaetung">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ab.verspaetung </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.abfahrtsverspaetung}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="verkehrsmittel">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> verkehrsmittel </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.verkehrsmittel.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="linien">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> linien </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.linien.linientext}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="betreiber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> betreiber </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.betreiber.kuerzel}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="haltestellen">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> haltestellen </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.haltestellen.name}} </mat-cell>
+    </ng-container>
+
+  </mat-table>
+  <mat-paginator [length]="numberPages" [pageSize]="50" (page)="pageEvent = $event; onPaginateChange($event)">
+
+  </mat-paginator>
+</div>
